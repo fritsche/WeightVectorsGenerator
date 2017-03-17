@@ -60,19 +60,18 @@ if [ "$?" = "0" ]; then
 	a=$(wc -l < first_layer.dat)
 	b=$(wc -l < second_layer.dat)
 
-	rm -f $m"m.dat"
+	filename="W"$m"D_"$(($a+$b))".dat"
+
+	rm -f $filename
 	# get the extreme points from first layer
 	for (( i = 1; i <= $m; i++ )); do
 		sort -k$i first_layer.dat > aux.dat
-		cat aux.dat | tail -n 1 >> $m"m.dat"
+		cat aux.dat | tail -n 1 >> $filename
 		head -n -1 aux.dat > first_layer.dat
 	done
 
-	cat first_layer.dat >> $m"m.dat"
-	cat second_layer.dat >> $m"m.dat"
-
-	echo $(($a+$b)) > $m.dat
-	cat $m"m.dat" >> $m.dat
+	cat first_layer.dat >> $filename
+	cat second_layer.dat >> $filename
 
 else
 	echo "COMPILATION ERROR!"
